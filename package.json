@@ -1,0 +1,19 @@
+{
+  "name": "hiretalx",
+  "version": "1.0.0",
+  "description": "HireTalX – Intelligent Talent Acquisition Assistant",
+  "scripts": {
+    "dev:server": "cd server && npm start",
+    "dev:client": "cd client && npm run dev",
+    "build:client": "cd client && npm run build"
+  },
+  "keywords": [
+    "recruitment",
+    "talent-acquisition",
+    "enterprise",
+    "react",
+    "typescript"
+  ],
+  "author": "HireTalX Engineering",
+  "license": "ISC"
+}

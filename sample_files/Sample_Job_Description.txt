@@ -1,0 +1,34 @@
+JOB TITLE: Senior Full Stack & AI Solutions Engineer
+COMPANY: NovaTech Financial Cloud
+DEPARTMENT: Core Platform & Applied AI
+LOCATION: Bangalore, India (Hybrid) / Remote Flexible
+EXPERIENCE: 5 to 8 Years
+COMPENSATION: INR 28,00,000 - 42,00,000 PA
+
+ABOUT THE ROLE:
+NovaTech Financial Cloud is seeking a high-impact Senior Full Stack & AI Solutions Engineer to join our next-generation platform team. In this role, you will lead the architecture of customer-facing enterprise applications that incorporate agentic AI workflows, intelligent document processing, and real-time financial data analytics.
+
+KEY RESPONSIBILITIES:
+- Architect, build, and maintain mission-critical enterprise web applications using React, TypeScript, and Node.js.
+- Design, evaluate, and deploy production-grade LLM integrations, Retrieval-Augmented Generation (RAG) pipelines, and prompt architectures in Python.
+- Develop scalable backend microservices and RESTful/GraphQL APIs interfacing with PostgreSQL, Redis, and message queues.
+- Containerize services using Docker and manage continuous deployment pipelines on AWS cloud infrastructure.
+- Partner with product leaders, UX designers, and recruiters to build accessible, high-performance interfaces.
+
+MANDATORY TECHNICAL SKILLS:
+- 5+ years of software engineering experience with deep expertise in React and TypeScript.
+- Strong proficiency in Node.js (Express/NestJS) for scalable backend microservices.
+- 2+ years of hands-on experience developing with Python for data services or machine learning pipelines.
+- Demonstrated experience integrating LLMs, embeddings, and RAG architectures in production.
+- Solid understanding of relational database design (PostgreSQL) and schema optimization.
+- Proficiency in Docker containerization and Git workflows.
+
+PREFERRED / BONUS SKILLS:
+- Practical experience with Vector Databases (Pinecone, ChromaDB, Milvus, or pgvector).
+- Experience with LangChain, LlamaIndex, or Google GenAI/OpenAI SDKs.
+- Hands-on cloud expertise with AWS (ECS, S3, RDS, Lambda).
+- Experience with CI/CD automation and container orchestration (Kubernetes).
+- Prior experience in FinTech, HR-Tech, or high-compliance SaaS environments.
+
+EDUCATION:
+- Bachelor's or Master's degree in Computer Science, Software Engineering, or equivalent practical industry experience.

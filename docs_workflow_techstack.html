@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HireTalX – System Architecture, Workflow & Tech Stack Specification</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 14mm 14mm 14mm 14mm;
+      @bottom-right {
+        content: counter(page);
+        font-size: 9pt;
+        color: #64748b;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 10pt;
+      line-height: 1.55;
+      color: #1e293b;
+      background-color: #ffffff;
+      padding: 0;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    .avoid-break {
+      page-break-inside: avoid;
+    }
+
+    /* Header styling */
+    .doc-header {
+      border-bottom: 3px solid #7c3aed;
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .doc-header h1 {
+      font-size: 20pt;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+    }
+
+    .doc-header .subtitle {
+      font-size: 11pt;
+      font-weight: 600;
+      color: #7c3aed;
+      margin-top: 3px;
+    }
+
+    .doc-header .doc-meta {
+      font-size: 8.5pt;
+      color: #64748b;
+      text-align: right;
+    }
+
+    /* Section Headings */
+    h2 {
+      font-size: 14pt;
+      font-weight: 700;
+      color: #0f172a;
+      margin-top: 18px;
+      margin-bottom: 10px;
+      border-left: 4px solid #7c3aed;
+      padding-left: 10px;
+    }
+
+    h3 {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #1e293b;
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      margin-bottom: 8px;
+      text-align: justify;
+    }
+
+    /* Badges & Pills */
+    .badge {
+      display: inline-block;
+      font-size: 7.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-right: 4px;
+    }
+
+    .badge-purple { background-color: #f3e8ff; color: #6b21a8; border: 1px solid #d8b4fe; }
+    .badge-navy { background-color: #0f172a; color: #ffffff; }
+    .badge-emerald { background-color: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+    .badge-blue { background-color: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 16px 0;
+      font-size: 9pt;
+    }
+
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 7px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #f8fafc;
+    }
+
+    /* Cards and Callouts */
+    .callout {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #7c3aed;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin: 12px 0;
+      font-size: 9pt;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 3px;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 10px 12px;
+      background-color: #ffffff;
+    }
+
+    .tech-card h4 {
+      font-size: 9.5pt;
+      font-weight: 700;
+      color: #7c3aed;
+      margin-bottom: 4px;
+    }
+
+    .tech-card p {
+      font-size: 8.5pt;
+      margin-bottom: 0;
+      color: #475569;
+    }
+
+    ul, ol {
+      margin-left: 18px;
+      margin-bottom: 10px;
+      font-size: 9pt;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 8.5pt;
+      background-color: #f1f5f9;
+      padding: 1px 4px;
+      border-radius: 3px;
+      color: #0f172a;
+    }
+
+    .workflow-step-box {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      background-color: #ffffff;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    .step-num {
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      line-height: 22px;
+      background-color: #7c3aed;
+      color: #ffffff;
+      text-align: center;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 8pt;
+      margin-right: 6px;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 8pt;
+      color: #94a3b8;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1: TITLE & EXECUTIVE ARCHITECTURE -->
+  <div class="doc-header">
+    <div>
+      <h1>HireTalX</h1>
+      <div class="subtitle">System Architecture, Technical Workflows & Stack Interaction Guide</div>
+    </div>
+    <div class="doc-meta">
+      <strong>Enterprise Platform Specification</strong><br>
+      Version: 2.4.0 (Production Release)<br>
+      Status: Verified & Operational
+    </div>
+  </div>
+
+  <h2>1. Executive Architectural Overview</h2>
+  <p>
+    <strong>HireTalX</strong> is a full-stack, enterprise-grade Talent Acquisition Assistant built to automate and streamline the end-to-end recruitment lifecycle. The system is engineered using a decoupled client-server architecture designed for zero latency, data privacy compliance, high parsing accuracy, and transparent algorithmic explainability.
+  </p>
+
+  <div class="callout">
+    <div class="callout-title">Core Mission & Guiding Principles</div>
+    Unlike traditional keyword-matching applicant tracking systems (ATS), HireTalX combines deterministic text extraction, transparent 100-point rubric scoring, verified evidence citation, human-in-the-loop recalibration audit trails, and ethical safeguards that completely blind personal demographic attributes from candidate scoring.
+  </div>
+
+  <h3>High-Level Architectural Blueprint</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">System Layer</th>
+        <th style="width: 35%;">Technology Core</th>
+        <th style="width: 40%;">Primary Responsibility & Operations</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Presentation Layer</strong></td>
+        <td>React 18, TypeScript, Tailwind CSS, Lucide Icons</td>
+        <td>Responsive enterprise HR dashboard, guided 7-stage workflow stepper, interactive scoring sliders, modals, and real-time state feedback.</td>
+      </tr>
+      <tr>
+        <td><strong>Build & Dev Tooling</strong></td>
+        <td>Vite 8, TypeScript Compiler (tsc), ES Modules</td>
+        <td>Sub-second hot module replacement (HMR), tree-shaking, production bundle optimization, and reverse proxy forwarding (<code>/api</code> &rarr; <code>:5000</code>).</td>
+      </tr>
+      <tr>
+        <td><strong>Application Server</strong></td>
+        <td>Node.js (v22.x), Express 4.x, Multer</td>
+        <td>RESTful API routing, multipart/form-data stream handling, JSON payload validation, CORS management, and error orchestration.</td>
+      </tr>
+      <tr>
+        <td><strong>Document Parsing</strong></td>
+        <td>PDF.js / pdf-parse, Mammoth (.docx), Plaintext</td>
+        <td>In-memory binary buffer parsing, text normalization, and structured extraction of job descriptions and candidate resumes.</td>
+      </tr>
+      <tr>
+        <td><strong>Inference & Evaluation Engine</strong></td>
+        <td>Google Gemini API & Deterministic Heuristic Engine</td>
+        <td>Structured JSON schema extraction, 100-point multi-factor candidate evaluation, evidence quote extraction, and contextual interview question generation.</td>
+      </tr>
+      <tr>
+        <td><strong>Persistence & State</strong></td>
+        <td>HTML5 Browser Session Storage & Memory Caches</td>
+        <td>Client-side persistence of active requisitions, evaluated candidates, live screening interview scores, and immutable recalibration audit logs.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>2. Technology Stack Deep Dive: How Each Component Works</h2>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <h4>React 18 & TypeScript</h4>
+      <p>
+        The UI uses functional components with custom React hooks and Context API (<code>RecruitmentContext</code>). TypeScript provides strict compile-time type safety across candidate models, scoring rubrics, and API response contracts.
+      </p>
+    </div>
+    <div class="tech-card">
+      <h4>Tailwind CSS (Enterprise Palette)</h4>
+      <p>
+        Tailwind CSS provides a refined design system featuring a deep slate navy sidebar (<code>#0f172a</code>), subtle purple accents (<code>#7c3aed</code>), clean typography, glassmorphism cards, and responsive data tables.
+      </p>
+    </div>
+    <div class="tech-card">
+      <h4>Node.js & Express REST Backend</h4>
+      <p>
+        Express runs as an asynchronous microservice on port 5000. It handles file uploads in memory via Multer, dispatches extraction jobs to parsing services, and coordinates scoring calculations.
+      </p>
+    </div>
+    <div class="tech-card">
+      <h4>Google Gemini GenAI SDK</h4>
+      <p>
+        Integrated via <code>@google/generative-ai</code> with <code>responseMimeType: "application/json"</code>. Prompts enforce strict output schemas with zero hallucination guardrails.
+      </p>
+    </div>
+    <div class="tech-card">
+      <h4>PDF.js / pdf-parse</h4>
+      <p>
+        Decodes incoming PDF binary streams into UTF-8 text buffers. Extracts raw document layouts without external system dependencies or cloud upload risks.
+      </p>
+    </div>
+    <div class="tech-card">
+      <h4>Mammoth DOCX Parser</h4>
+      <p>
+        Reads Office Open XML (DOCX) files directly from in-memory byte arrays. Converts word processor paragraphs and bullet hierarchies into sanitized plaintext.
+      </p>
+    </div>
+  </div>
+
+  <!-- PAGE BREAK TO PAGE 2: DETAILED 7-WORKFLOW WALKTHROUGH -->
+  <div class="page-break"></div>
+
+  <div class="doc-header">
+    <div>
+      <h1>HireTalX</h1>
+      <div class="subtitle">Complete 7-Stage Talent Acquisition Workflow Lifecycle</div>
+    </div>
+    <div class="doc-meta">
+      <strong>Workflow Execution Manual</strong><br>
+      Stage-by-Stage Operational Walkthrough
+    </div>
+  </div>
+
+  <h2>3. The Seven Mandatory Recruitment Workflows</h2>
+
+  <!-- Workflow 1 -->
+  <div class="workflow-step-box avoid-break">
+    <h3><span class="step-num">1</span> Workflow 1: Recruiter Workspace Authentication & Session Management</h3>
+    <p>
+      <strong>Objective:</strong> Establish a verified recruiter session and load active requisitions, recruiter metrics, and role permissions.
+    </p>
+    <ul>
+      <li><strong>Mechanism:</strong> The recruiter selects their enterprise profile (e.g., <em>Sarah Jenkins – Lead Technical Recruiter</em> or <em>Karthik Subramanian – Senior Talent Acquisition Specialist</em>) or submits corporate credentials.</li>
+      <li><strong>Data Handling:</strong> The Express endpoint (<code>POST /api/auth/login</code>) validates the session, issues a session token, and returns the recruiter's active requisitions and placement targets.</li>
+      <li><strong>Persistence:</strong> The user session is automatically mirrored to browser <code>sessionStorage</code>, ensuring state survives navigation, tab switches, and page refreshes.</li>
+    </ul>
+  </div>
+
+  <!-- Workflow 2 -->
+  <div class="workflow-step-box avoid-break">
+    <h3><span class="step-num">2</span> Workflow 2: Job Description Upload, Extraction & Interactive Editing</h3>
+    <p>
+      <strong>Objective:</strong> Ingest job descriptions across heterogeneous formats (PDF, DOCX, pasted text) and extract a normalized, editable schema.
+    </p>
+    <ul>
+      <li><strong>Ingestion:</strong> Accepts drag-and-drop <code>.pdf</code>, <code>.docx</code>, or raw text input. Also provides a 1-click benchmark role import (<em>Senior Full Stack & AI Solutions Engineer</em>).</li>
+      <li><strong>Extraction Engine:</strong> Backend parses the binary stream via <code>pdf-parse</code> or <code>mammoth</code>. The parsing engine structures the text into: Role Title, Department, Location, Experience Range, Mandatory Technical Skills, Preferred Competencies, and Responsibilities.</li>
+      <li><strong>Recruiter Editability:</strong> Recruiters can enter edit mode to add, remove, or modify required skills and duties prior to ranking, guaranteeing the rubric perfectly matches hiring manager criteria.</li>
+    </ul>
+  </div>
+
+  <!-- Workflow 3 -->
+  <div class="workflow-step-box avoid-break">
+    <h3><span class="step-num">3</span> Workflow 3: Multi-Resume Ingestion & Binary Document Extraction</h3>
+    <p>
+      <strong>Objective:</strong> Bulk-process candidate resumes concurrently with status tracking, metadata extraction, and candidate pool management.
+    </p>
+    <ul>
+      <li><strong>Upload Pipeline:</strong> Multer receives multipart file arrays in memory (up to 20 files per batch). The system extracts full text, calculates file sizes, and parses candidate names and career timelines.</li>
+      <li><strong>Benchmark Candidate Pool:</strong> Features 5 pre-screened profiles representing realistic talent diversity:
+        <em>Aravind Sharma</em> (Top match, ~92), <em>Priya Venkat</em> (Backend/Cloud, ~84), <em>Marcus Chen</em> (ML/Data, ~72), <em>Neha Kapoor</em> (Frontend/UI, ~58), and <em>David Miller</em> (Legacy Java, ~42).
+      </li>
+      <li><strong>Status Tracking:</strong> Real-time processing indicators transition from <code>Uploading</code> to <code>Extracting</code> to <code>Parsed & Ready</code>.</li>
+    </ul>
+  </div>
+
+  <!-- Workflow 4 -->
+  <div class="workflow-step-box avoid-break">
+    <h3><span class="step-num">4</span> Workflow 4: Transparent 100-Point Candidate Ranking & Recalibration Audit</h3>
+    <p>
+      <strong>Objective:</strong> Perform unbiased multi-factor evaluation with verbatim evidence citations and human-in-the-loop override capabilities.
+    </p>
+    <ul>
+      <li><strong>100-Point Scoring Rubric:</strong>
+        <br>&bull; <em>Technical Skills Match (40 pts):</em> Direct evaluation of mandatory (30 pts) and preferred (10 pts) stack proficiency.
+        <br>&bull; <em>Experience Depth (25 pts):</em> Total verified engineering years relative to role seniority requirements.
+        <br>&bull; <em>Project Relevance & Scale (20 pts):</em> Quantifiable impact in high-scale microservices and production AI pipelines.
+        <br>&bull; <em>Education & Foundation (15 pts):</em> Accredited Engineering/CS degree or equivalent domain foundations.
+      </li>
+      <li><strong>Blind Assessment Guarantee:</strong> Candidate name, gender, age, ethnicity, nationality, photo, and marital status have strictly <strong>0% algorithmic weight</strong>.</li>
+      <li><strong>Evidence-Based Explanations:</strong> Exact verbatim quotes from candidate resumes are extracted to substantiate each score dimension.</li>
+      <li><strong>Human-in-the-Loop Recalibration Audit:</strong> Recruiters can challenge an automated score (e.g., if custom Triton inference was under-weighted by initial keyword match), adjust point deltas, submit review notes, and permanently record an immutable audit entry showing Original Score, Corrected Score, and Delta.</li>
+    </ul>
+  </div>
+
+  <!-- PAGE BREAK TO PAGE 3: WORKFLOWS 5-7 & SECURITY/DATA FLOW -->
+  <div class="page-break"></div>
+
+  <div class="doc-header">
+    <div>
+      <h1>HireTalX</h1>
+      <div class="subtitle">Screening Intelligence, Market Analytics & Talent Sourcing Workflows</div>
+    </div>
+    <div class="doc-meta">
+      <strong>Workflow Execution Manual (Part II)</strong><br>
+      Market Analytics & Sourcing Query Engine
+    </div>
+  </div>
+
+  <!-- Workflow 5 -->
+  <div class="workflow-step-box avoid-break">
+    <h3><span class="step-num">5</span> Workflow 5: Contextual Screening Interview Questions & Evaluation Rubric</h3>
+    <p>
+      <strong>Objective:</strong> Equip technical recruiters and hiring managers with structured, high-signal interview questions tailored to the active JD.
+    </p>
+    <ul>
+      <li><strong>Structured Composition:</strong> Generates exactly 10 questions:
+        <br>&bull; <em>Technical Architecture & Code:</em> 4 questions (RAG pipelines, state streaming, database scaling, container security).
+        <br>&bull; <em>Practical Experience & Incidents:</em> 3 questions (production outage diagnosis, technical debt vs. velocity, inference cost management).
+        <br>&bull; <em>Role & Cultural Fit:</em> 3 questions (cross-functional communication, junior mentorship, continuous technology vetting).
+      </li>
+      <li><strong>Expected Good-Answer Benchmarks:</strong> Concrete bulleted answer criteria detailing what exceptional candidate responses must include.</li>
+      <li><strong>Interactive Recruiter Scorekeeper:</strong> Includes live 1-to-5 star rating inputs and a phone screening notes drawer for real-time interview documentation.</li>
+    </ul>
+  </div>
+
+  <!-- Workflow 6 -->
+  <div class="workflow-step-box avoid-break">
+    <h3><span class="step-num">6</span> Workflow 6: Public Hiring Market Intelligence & Compensation Percentiles</h3>
+    <p>
+      <strong>Objective:</strong> Provide actionable salary benchmarks, talent demand metrics, and comparable public job postings.
+    </p>
+    <ul>
+      <li><strong>Comparable Public Postings:</strong> Displays active public technology job postings from top tier firms (Razorpay, CRED, Swiggy, Thoughtworks) with role, experience, compensation (INR LPA and USD), location, and direct careers portal URLs.</li>
+      <li><strong>Transparent Verification Badges:</strong> Every benchmark is explicitly tagged as either <code>[Verified Public Posting]</code> or <code>[Estimated Market Benchmark]</code>.</li>
+      <li><strong>Compensation Distribution:</strong> Visualizes the 25th percentile (₹28 LPA), Median (₹36 LPA), 75th percentile (₹44 LPA), and 90th percentile (₹50+ LPA) salary spread.</li>
+      <li><strong>Compliance Standard:</strong> Operates strictly under open public data standards. Zero unauthorized web scraping or authenticated sessions of LinkedIn or Naukri are performed.</li>
+    </ul>
+  </div>
+
+  <!-- Workflow 7 -->
+  <div class="workflow-step-box avoid-break">
+    <h3><span class="step-num">7</span> Workflow 7: Dual-Engine Sourcing Search String Generator (Naukri & LinkedIn)</h3>
+    <p>
+      <strong>Objective:</strong> Produce production-ready talent sourcing queries formatted with platform-specific Boolean logic and plain language keyword densities.
+    </p>
+    <ul>
+      <li><strong>Naukri Boolean & Plain:</strong> Formatted with <code>AND</code>, <code>OR</code>, <code>NOT</code>, and parentheses grouping optimized for Naukri Resdex keyword matching. Includes comma-separated plain keywords for quick recruiter filters.</li>
+      <li><strong>LinkedIn Boolean & Plain:</strong> Structured with title parameters (<code>title:"Full Stack Engineer" ...</code>) and semantic phrases optimized for LinkedIn Recruiter search algorithms.</li>
+      <li><strong>1-Click Clipboard Copy:</strong> Each search query features an instant copy button with visual toast feedback for rapid recruiter sourcing workflows.</li>
+    </ul>
+  </div>
+
+  <h2>4. Data Flow & Inter-Process Architecture</h2>
+
+  <div class="callout avoid-break">
+    <div class="callout-title">End-to-End Execution Sequence</div>
+    <ol>
+      <li><strong>Ingest:</strong> Client posts binary file payload to Express <code>/api/jd/parse</code> or <code>/api/resumes/upload</code>.</li>
+      <li><strong>Extract:</strong> Express streams binary buffer to <code>parserService.js</code>, invoking <code>pdf-parse</code> or <code>mammoth.extractRawText()</code>.</li>
+      <li><strong>Analyze:</strong> Normalized text is processed to extract structured JSON entities.</li>
+      <li><strong>Evaluate:</strong> <code>rankingService.js</code> computes category point breakdowns against the 100-point rubric and checks against ethical bias rules.</li>
+      <li><strong>Audit:</strong> If recruiter adjusts points, <code>/api/ranking/recalibrate</code> records delta, reason, timestamp, and audit ID into the persistent log.</li>
+      <li><strong>Synchronize:</strong> Client receives verified JSON, updates local state, and writes the state snapshot to browser <code>sessionStorage</code>.</li>
+    </ol>
+  </div>
+
+  <h2>5. Security, Ethics & Production Readiness</h2>
+  <ul>
+    <li><strong>Secret Protection:</strong> Sensitive API keys are maintained exclusively on the backend in environment variables (<code>.env</code>) and are never exposed to the client bundle.</li>
+    <li><strong>Resilient Offline Fallback:</strong> If an API key is missing or encounters network quota limits, HireTalX automatically fails over to its deterministic evaluation and scoring engines, ensuring 100% operational uptime.</li>
+    <li><strong>Compliance & Privacy:</strong> Zero candidate data or job descriptions are transmitted to unauthorized third parties or persistent external databases.</li>
+  </ul>
+
+  <div class="footer-note">
+    HireTalX – Intelligent Talent Acquisition Assistant &bull; Complete System Architecture &amp; Workflow Specification Document
+  </div>
+
+</body>
+</html>

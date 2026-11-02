@@ -1,0 +1,29 @@
+ARAVIND SHARMA
+Email: aravind.sharma.eng@example.com | Phone: +91 98765 43210 | Location: Bangalore, India
+LinkedIn: linkedin.com/in/aravind-sharma-tech | GitHub: github.com/aravind-sharma
+
+PROFESSIONAL SUMMARY:
+Results-driven Full Stack & AI Solutions Engineer with 6.5 years of experience designing scalable web applications and enterprise generative AI solutions. Proven mastery across React, TypeScript, Node.js, and Python with hands-on production expertise in LLMs, RAG, PostgreSQL, and Docker on AWS.
+
+WORK EXPERIENCE:
+Apex FinTech Labs | Bangalore, India
+Lead Full Stack & Generative AI Engineer (2022 - Present)
+- Spearheaded the technical architecture of an AI-assisted loan underwriting copilot used by 1,200 financial analysts.
+- Built reactive frontends with React 18, TypeScript, and Tailwind CSS with real-time SSE streaming.
+- Developed low-latency Python backend microservices integrating LangChain, Claude, and Gemini with pgvector embeddings.
+- Configured Dockerized pipelines and automated AWS ECS deployments using GitHub Actions.
+
+Zenith Software Systems | Hyderabad, India
+Senior Software Engineer (2019 - 2022)
+- Built high-throughput RESTful microservices in Node.js and Express processing 15M transactions daily.
+- Optimized PostgreSQL relational queries and added Redis caching, decreasing API response times by 38%.
+- Mentored a cohort of 5 junior frontend and backend developers in clean architecture and TypeScript best practices.
+
+EDUCATION:
+- B.Tech in Computer Science and Engineering, National Institute of Technology Karnataka (2015 - 2019) - CGPA: 8.8/10
+
+TECHNICAL SKILLS:
+- Frontend: React, TypeScript, Next.js, Redux Toolkit, Tailwind CSS, HTML5/CSS3
+- Backend: Node.js, Express, Python, FastAPI, REST APIs, GraphQL, Microservices
+- Data & AI: PostgreSQL, Redis, pgvector, LangChain, RAG Pipelines, Vector DBs, Prompt Engineering
+- DevOps & Cloud: Docker, AWS (ECS, S3, RDS, Lambda), GitHub Actions, Linux
